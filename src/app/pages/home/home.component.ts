@@ -3,7 +3,6 @@ import {DecimalPipe} from '@angular/common';
 import {UserService} from "../../service/user.service";
 import {User} from "../../model/user";
 import {Router} from "@angular/router";
-import {Observable} from "rxjs";
 
 @Component({
   selector: 'home',
