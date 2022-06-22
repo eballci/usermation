@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {UserService} from "../../service/user.service";
+import {User} from "../../model/user";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-user',
@@ -7,9 +10,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserComponent implements OnInit {
 
-  constructor() { }
+  load: boolean = true;
+  user = {} as User;
 
-  ngOnInit(): void {
+  constructor(
+    private userService: UserService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
   }
 
+  ngOnInit(): void {
+    this.getUser();
+  }
+
+  getUser(): void {
+    const id = Number(this.route.snapshot.paramMap.get("id"));
+    this.userService.getUser(id).subscribe(value => {
+      this.user = value;
+      this.load = false;
+      console.log(this.user)
+    });
+  }
 }

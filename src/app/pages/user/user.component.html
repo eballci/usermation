@@ -1,1 +1,62 @@
-<p>user works!</p>
+<div class="container mt-3 text-center" *ngIf="load else loaded">
+  Loading ...
+</div>
+
+<ng-template #loaded>
+  <div class="container mt-3">
+    <h2>{{user.name}}</h2>
+    <div class="row mt-3">
+      <div class="col-md-3">
+        <img  class="img-thumbnail" src="https://picsum.photos/500">
+        <table class="table table-bordered">
+          <tr>
+            <th>Username:</th>
+            <td>{{user.username}}</td>
+          </tr>
+          <tr>
+            <th>Email:</th>
+            <td>{{user.email}}</td>
+          </tr>
+          <tr>
+            <th rowspan="5">Address:</th>
+            <td>{{user.address.suite}}</td>
+          </tr>
+          <tr>
+            <td>{{user.address.street}}</td>
+          </tr>
+          <tr>
+            <td>{{user.address.city}}</td>
+          </tr>
+          <tr>
+            <td>{{user.address.zipcode}}</td>
+          </tr>
+          <tr>
+            <td>{{user.address.geo.lat + ";" + user.address.geo.lng}}</td>
+          </tr>
+          <tr>
+            <th>Phone:</th>
+            <td>{{user.phone}}</td>
+          </tr>
+          <tr>
+            <th>Website:</th>
+            <td>{{user.website}}</td>
+          </tr>
+          <tr>
+            <th rowspan="3">Company:</th>
+            <td>{{user.company.name}}</td>
+          </tr>
+          <tr>
+            <td>{{user.company.catchPhrase}}</td>
+          </tr>
+          <tr>
+            <td>{{user.company.bs}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-md-9">
+        <h6>{{user.name}}'s Posts</h6>
+        <app-posts [id]="user.id"></app-posts>
+      </div>
+    </div>
+  </div>
+</ng-template>

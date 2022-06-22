@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {catchError, Observable, of} from "rxjs";
 import {User} from "../model/user";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class UserService {
   };
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) {}
 
   private url(id: number): string {
@@ -48,7 +50,7 @@ export class UserService {
 
   private handleError<T>(operation = "operation", result?: T) {
     return (error: any): Observable<T> => {
-      console.error(error);
+      this.router.navigateByUrl("/error").then(r => r.valueOf());
       return of(result as T);
     };
   }
