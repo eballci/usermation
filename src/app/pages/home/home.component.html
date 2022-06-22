@@ -21,20 +21,80 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let user of page; index as i" (click)="detail(user)" style="cursor: pointer">
+    <tr *ngFor="let user of page; index as i" (click)="(user.id !== edit) ? detail(user) : (0);"
+        style="cursor: pointer">
       <td>{{((current - 1) * size) + i + 1}}</td>
-      <td>{{user.name}}</td>
-      <td>{{user.username}}</td>
-      <td>{{user.email}}</td>
-      <td>{{user.address.city}}</td>
-      <td>{{user.phone}}</td>
-      <td>{{user.website}}</td>
-      <td>{{user.company.name}}</td>
       <td>
-        <button class="btn btn-warning" (click)="update(user)">Update</button>
+        <ng-container *ngIf="edit !== user.id">
+          {{user.name}}
+        </ng-container>
+        <ng-container *ngIf="edit === user.id">
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="editUser.name">
+        </ng-container>
       </td>
       <td>
-        <button class="btn btn-danger" (click)="delete(user)">Delete</button>
+        <ng-container *ngIf="edit !== user.id">
+          {{user.username}}
+        </ng-container>
+        <ng-container *ngIf="edit === user.id">
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="editUser.username">
+        </ng-container>
+      </td>
+      <td>
+        <ng-container *ngIf="edit !== user.id">
+          {{user.email}}
+        </ng-container>
+        <ng-container *ngIf="edit === user.id">
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="editUser.email">
+        </ng-container>
+      </td>
+      <td>
+        <ng-container *ngIf="edit !== user.id">
+          {{user.address.city}}
+        </ng-container>
+        <ng-container *ngIf="edit === user.id">
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="editUser.address.city">
+        </ng-container>
+      </td>
+      <td>
+        <ng-container *ngIf="edit !== user.id">
+          {{user.phone}}
+        </ng-container>
+        <ng-container *ngIf="edit === user.id">
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="editUser.phone">
+        </ng-container>
+      </td>
+      <td>
+        <ng-container *ngIf="edit !== user.id">
+          {{user.website}}
+        </ng-container>
+        <ng-container *ngIf="edit === user.id">
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="editUser.website">
+        </ng-container>
+      </td>
+      <td>
+        <ng-container *ngIf="edit !== user.id">
+          {{user.company.name}}
+        </ng-container>
+        <ng-container *ngIf="edit === user.id">
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="editUser.company.name">
+        </ng-container>
+      </td>
+      <td>
+        <ng-container *ngIf="edit !== user.id">
+          <button class="btn btn-warning" (click)="update(user); $event.stopPropagation();">Update</button>
+        </ng-container>
+        <ng-container *ngIf="edit === user.id">
+          <button class="btn btn-success" (click)="completeUpdate(); $event.stopPropagation();">Update</button>
+        </ng-container>
+      </td>
+      <td>
+        <ng-container *ngIf="edit !== user.id">
+          <button class="btn btn-danger" (click)="delete(user); $event.stopPropagation();">Delete</button>
+        </ng-container>
+        <ng-container *ngIf="edit === user.id">
+          <button class="btn btn-primary" (click)="cancelUpdate(); $event.stopPropagation();">Cancel</button>
+        </ng-container>
       </td>
     </tr>
     </tbody>

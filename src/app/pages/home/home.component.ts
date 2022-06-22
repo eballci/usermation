@@ -11,6 +11,8 @@ import {Router} from "@angular/router";
 })
 
 export class HomeComponent implements OnInit {
+  editUser = {} as User;
+  edit: number = -1;
   users: User[] = [];
   result: User[] = [];
   page: User[] = [];
@@ -58,7 +60,8 @@ export class HomeComponent implements OnInit {
 
   delete(user: User): void {
     if (confirm("Are you sure? This is not recoverable.")) {
-      this.userService.deleteUser(user.id).subscribe(user => {
+      this.users = this.users.filter(u => u.id !== user.id);
+      this.userService.deleteUser(user.id).subscribe(() => {
         this.bindResult();
       });
     }
@@ -69,7 +72,23 @@ export class HomeComponent implements OnInit {
   }
 
   update(user: User): void {
-    this.router.navigateByUrl(`/user/update/${user.id}`).then(r => r.valueOf());
+    this.edit = user.id;
+    this.editUser = user;
+  }
+
+  cancelUpdate(): void {
+    this.edit = -1;
+  }
+
+  completeUpdate(): void {
+    this.userService.updateUser(this.editUser);
+    this.edit = -1;
+    this.users.forEach((user, index) => {
+      if (user.id === this.edit) {
+        this.users[index] = this.editUser;
+      }
+    });
+    this.bindResult();
   }
 
   get searchTerm(): string {
