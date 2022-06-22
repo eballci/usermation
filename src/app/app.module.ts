@@ -11,6 +11,7 @@ import {HttpClientModule} from "@angular/common/http";
 import { UpdateComponent } from './pages/update/update.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { PostsComponent } from './components/posts/posts.component';
+import { CommentsComponent } from './components/comments/comments.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { PostsComponent } from './components/posts/posts.component';
     UserComponent,
     UpdateComponent,
     PageNotFoundComponent,
-    PostsComponent
+    PostsComponent,
+    CommentsComponent
   ],
   imports: [
     BrowserModule,

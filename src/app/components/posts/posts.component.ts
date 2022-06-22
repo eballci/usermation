@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Post} from "../../model/post";
-import {Router} from "@angular/router";
 import {UserService} from "../../service/user.service";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {CommentsComponent} from "../comments/comments.component";
 
 @Component({
   selector: 'app-posts',
@@ -20,7 +21,7 @@ export class PostsComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private router: Router
+    private modalService: NgbModal
   ) {
   }
 
@@ -29,7 +30,8 @@ export class PostsComponent implements OnInit {
   }
 
   detail(post: Post): void {
-    this.router.navigateByUrl(`/user/${this.id}/post/${post.id}`).then(r => r.valueOf());
+    const modal = this.modalService.open(CommentsComponent);
+    modal.componentInstance.id = post.id;
   }
 
   private getPosts(): void {
