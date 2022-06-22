@@ -3,6 +3,7 @@ import {catchError, Observable, of} from "rxjs";
 import {User} from "../model/user";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {Post} from "../model/post";
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +47,12 @@ export class UserService {
     return this.http.delete<User>(this.url(id), this.httpOptions).pipe(
       catchError(this.handleError<User>("deleteHero"))
     )
+  }
+
+  getPosts(id: number): Observable<Post[]> {
+    return this.http.get<Post[]>(this.base + id + "/posts").pipe(
+      catchError(this.handleError<Post[]>("getPosts", []))
+    );
   }
 
   private handleError<T>(operation = "operation", result?: T) {

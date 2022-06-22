@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Post} from "../../model/post";
-import {PostService} from "../../service/post.service";
 import {Router} from "@angular/router";
+import {UserService} from "../../service/user.service";
 
 @Component({
   selector: 'app-posts',
@@ -19,7 +19,7 @@ export class PostsComponent implements OnInit {
   size: number = 5;
 
   constructor(
-    private postService: PostService,
+    private userService: UserService,
     private router: Router
   ) {
   }
@@ -33,8 +33,8 @@ export class PostsComponent implements OnInit {
   }
 
   private getPosts(): void {
-    this.postService.getPosts().subscribe(posts => {
-      this.posts = posts.filter(post => post.userId === this.id);
+    this.userService.getPosts(this.id).subscribe(posts => {
+      this.posts = posts;
       this.bindResult();
     })
   }
